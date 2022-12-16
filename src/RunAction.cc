@@ -12,7 +12,7 @@
 
 using namespace std;
 
-RunAction::RunAction() : G4UserRunAction(), detectorConstruction(0), analysisManager(0)
+RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primary) : G4UserRunAction(), detectorConstruction(_det), primary(_primary), analysisManager(0)
 {}
 
 RunAction::~RunAction()
@@ -27,19 +27,12 @@ G4Run* RunAction::GenerateRun(){
 
 void RunAction::BeginOfRunAction(const G4Run* aRun) {
 
-  // Get information from DetectorConstruction class
-  detectorConstruction = static_cast<const DetectorConstruction*> (G4MTRunManager::GetRunManager()->GetUserDetectorConstruction());
-
   if(IsMaster()) {
     cout << "Begin of RunAction" << endl;
     G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
 
   }
-   //if (!analysisManager) { BookHisto(); }  
-  // G4MTRunManager::GetRunManager()->SetPrintProgress(static_cast<G4int>(numOfEvent*0.1));
 
-    const PrimaryGeneratorAction* primary =
-            dynamic_cast<const PrimaryGeneratorAction*>(G4MTRunManager::GetRunManager()->GetUserPrimaryGeneratorAction());
     
     if (primary == nullptr) return;
     // add info to Run object
