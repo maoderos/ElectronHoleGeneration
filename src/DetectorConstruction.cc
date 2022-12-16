@@ -18,7 +18,7 @@
 //G4ThreadLocal G4UniformElectricField* DetectorConstruction::fEMfield = 0;
 // Constructor
 DetectorConstruction::DetectorConstruction()
-: G4VUserDetectorConstruction(), logicWorld(0),physWorld(0), worldMaterial(0), sensitiveThickness(2*cm) 
+: G4VUserDetectorConstruction(), logicWorld(0),physWorld(0), worldMaterial(0), sensitiveThickness(2*cm), materialName("SiC")
 {
     detectorMessenger = new DetectorMessenger(this);
     DefineMaterials();
@@ -89,7 +89,7 @@ void DetectorConstruction::ConstructSDandField()
 
 void DetectorConstruction::SetSensitiveThickness(G4double value){
   sensitiveThickness = value/2;
-  G4cout << "changing sensitive volume thickness" << G4endl;
+  G4cout << "Changing sensitive volume thickness" << G4endl;
   G4MTRunManager::GetRunManager()->ReinitializeGeometry();
 }
 
@@ -103,6 +103,7 @@ G4bool DetectorConstruction::SetSensitiveMaterial(const G4String& value) {
   }
 
     electronHolePairEnergy = electronHolePairEnergyMaterial[value];
+    materialName = value;
 
   if (logicSensitive){
     logicSensitive->SetMaterial(sensitiveMaterial);

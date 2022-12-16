@@ -5,14 +5,11 @@
 #include "G4VUserDetectorConstruction.hh"
 #include "G4Version.hh"
 #include "G4Material.hh"
+#include "G4String.hh"
 #include "G4Box.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "DetectorMessenger.hh"
-#include "G4EqMagElectricField.hh"
-#include "G4UniformElectricField.hh"
-#include "G4DormandPrince745.hh"
-#include "G4ChordFinder.hh"
 
 class G4Region;
 
@@ -23,15 +20,12 @@ class DetectorConstruction : public G4VUserDetectorConstruction
         virtual ~DetectorConstruction();
 
         virtual G4VPhysicalVolume* Construct();
-
         virtual void ConstructSDandField();
-
         void SetSensitiveThickness(G4double value);
         G4bool SetSensitiveMaterial(const G4String& value);
-
         inline G4double GetSensitiveThickness() const {return sensitiveThickness;};
         inline G4double GetElectronHolePairEnergy() const {return electronHolePairEnergy;}
-
+        inline G4String GetMaterialName() const {return materialName;};
 
     private:
         void DefineMaterials();
@@ -55,5 +49,6 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
         std::map<G4String, G4double> electronHolePairEnergyMaterial;
         G4double electronHolePairEnergy;
+        G4String materialName;
 };
 #endif
