@@ -47,20 +47,29 @@ void RunAction::EndOfRunAction(const G4Run* aRun) {
 
 void RunAction::BookHisto() {
   // Create or get analysis manager
-  // The choice of analysis technology is done via selection of a namespace
-  // in HistoManager.hh
   std::cout << "BookHisto" << std::endl;
   analysisManager = G4AnalysisManager::Instance();
   analysisManager->SetDefaultFileType("root");
   analysisManager->SetVerboseLevel(1);
   analysisManager->SetActivation(true);  // enable inactivation of histograms
-  G4int nbins = 100;
-  //analysisManager->CreateH1("Edep","Edep in sensitive volume", nbins,(2*detectorConstruction->GetMetalThickness())/(um),(2*detectorConstruction->GetMetalThickness() + 2*detectorConstruction->GetSensitiveThickness())/(um));
   
-  analysisManager->CreateNtuple("SiDetector", "physics");
+  analysisManager->CreateNtuple("PrimaryParticle", "PrimaryParticle");
+  analysisManager->CreateNtupleDColumn("fEdep");
+  analysisManager->CreateNtupleDColumn("fEdepIoni");
+  analysisManager->CreateNtupleDColumn("fEdepNiel");
+  analysisManager->CreateNtupleDColumn("fPrimaryEnergy");
+  analysisManager->CreateNtupleDColumn("fZPos");
+  analysisManager->CreateNtupleSColumn("fMaterial");
   analysisManager->SetNtupleMerging(true); //So that all is joined in one file
-  analysisManager->FinishNtuple();
+  analysisManager->FinishNtuple(0);
   
+  analysisManager->CreateNtuple("Electron-Hole", "Electron-Hole");
+  analysisManager->CreateNtupleIColumn("fNumberEH");
+  analysisManager->CreateNtupleDColumn("fXPos");
+  analysisManager->CreateNtupleDColumn("fYPos");
+  analysisManager->CreateNtupleDColumn("fZPos");
+  analysisManager->SetNtupleMerging(true);
+  analysisManager->FinishNtuple(1);
   G4String fileName = "output.root";
   analysisManager->OpenFile(fileName);
   
