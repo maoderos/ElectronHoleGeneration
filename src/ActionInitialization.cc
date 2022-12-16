@@ -6,8 +6,8 @@
 #include "SteppingAction.hh"
 
 
-ActionInitialization::ActionInitialization()
-: G4VUserActionInitialization()
+ActionInitialization::ActionInitialization(DetectorConstruction* det)
+: G4VUserActionInitialization(), detector(det)
 {}
 
 ActionInitialization::~ActionInitialization()

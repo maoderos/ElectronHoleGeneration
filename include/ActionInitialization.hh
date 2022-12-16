@@ -2,14 +2,16 @@
 #define Action_Initialization_h 1
 
 #include "G4Version.hh"
+#include "DetectorConstruction.hh"
 
 #if (G4VERSION_NUMBER >= 1000)
 #include "G4VUserActionInitialization.hh"
 
+class DetectorConstruction;
 
 class ActionInitialization : public G4VUserActionInitialization {
 public:
-  ActionInitialization();
+  ActionInitialization(DetectorConstruction*);
   ~ActionInitialization();
 
   virtual void Build() const;
@@ -17,6 +19,7 @@ public:
 
 private:
   
+  DetectorConstruction* detector;
 };
 
 #endif

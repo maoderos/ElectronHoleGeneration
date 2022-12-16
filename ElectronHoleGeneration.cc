@@ -42,14 +42,15 @@ int main(int argc,char** argv)
   // Set mandatory initialization classes
   //
   // Detector construction
-  runManager->SetUserInitialization(new DetectorConstruction());
+  DetectorConstruction* detector = new DetectorConstruction();
+  runManager->SetUserInitialization(detector);
 
   // Physics list
   //runManager->SetUserInitialization(new MicroElecSiPhysics);
   runManager->SetUserInitialization(new FTFP_BERT_liv);
     
   // User action initialization
-  runManager->SetUserInitialization(new ActionInitialization());
+  runManager->SetUserInitialization(new ActionInitialization(detector));
   
   // Choose the Random engine
   G4Random::setTheEngine(new CLHEP::RanecuEngine);

@@ -38,10 +38,22 @@ G4bool SensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* history)
     G4double totalEnergyDep = step->GetTotalEnergyDeposit();
     G4double nielEnergyDep = step->GetNonIonizingEnergyDeposit();
     G4double ionizingEnergyDep = totalEnergyDep - nielEnergyDep;
+    // Get the mean point in the step.
+    G4double xPos = (step->GetPostStepPoint()->GetPosition().x() - step->GetPreStepPoint()->GetPosition().x() )/2;
+    G4double yPos = (step->GetPostStepPoint()->GetPosition().y() - step->GetPreStepPoint()->GetPosition().y() )/2;
+    G4double zPos = (step->GetPostStepPoint()->GetPosition().z() - step->GetPreStepPoint()->GetPosition().z() )/2;
     const G4ParticleDefinition* particle = step->GetTrack()->GetParticleDefinition();
     G4int trackID = step->GetTrack()->GetTrackID();
-    G4int eventNumber = G4RunManager::GetRunManager()-> GetCurrentEvent()->GetEventID();
-    
+    G4int eventNumber = G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
+
+    // Calculate the number of electron-hole pairs in the step
+    G4double electronHolePairEnergy = det->GetElectronHolePairEnergy();
+    if (ionizingEnergyDep > electronHolePairEnergy) {
+      // Number of eh 
+      G4double a = 1; // test
+
+    }
+
     return true;
 }
 
