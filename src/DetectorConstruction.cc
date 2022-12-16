@@ -12,7 +12,6 @@
 #include "G4Box.hh"
 #include "G4UserLimits.hh"
 #include "G4SDManager.hh"
-#include "SensitiveDetector.hh"
 #include "G4ProductionCuts.hh"
 
 
@@ -86,12 +85,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
 void DetectorConstruction::ConstructSDandField()
 {
   
-  if (G4SDManager::GetSDMpointer()->FindSensitiveDetector("Detector",0)) delete G4SDManager::GetSDMpointer()->FindSensitiveDetector("Detector");
-  G4SDManager* sdMan = G4SDManager::GetSDMpointer();
-  SensitiveDetector* sd = new SensitiveDetector("Detector", "DetectorCollection", this);
-  sdMan->AddNewDetector(sd);
-  SetSensitiveDetector(logicSensitive,sd);
-  std::cout << "Sensitive Detector created" << std::endl;
 }
 
 void DetectorConstruction::SetSensitiveThickness(G4double value){

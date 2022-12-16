@@ -1,5 +1,5 @@
 #include "RunAction.hh"
-#include "Run.hh"
+#include "G4Run.hh"
 #include "G4MTRunManager.hh"
 #include "PrimaryGeneratorAction.hh"
 #include "DetectorConstruction.hh"
@@ -18,13 +18,6 @@ RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primar
 RunAction::~RunAction()
 {}
 
-G4Run* RunAction::GenerateRun(){
-    cout << "Generating Run" << endl;
-    run = new Run();
-    cout << "Run generated successfully" << endl;
-    return run;
-}
-
 void RunAction::BeginOfRunAction(const G4Run* aRun) {
 
   if(IsMaster()) {
@@ -32,11 +25,9 @@ void RunAction::BeginOfRunAction(const G4Run* aRun) {
     G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
 
   }
-
     
     if (primary == nullptr) return;
     // add info to Run object
-    run->SetPrimaryInformation(primary->GetParticleGun()->GetParticleDefinition(),  primary->GetParticleGun()->GetParticleEnergy());
     cout << "Finished BeginOfRunAction" << endl;
 }
 
@@ -52,49 +43,6 @@ void RunAction::EndOfRunAction(const G4Run* aRun) {
     if (!IsMaster()) return; // if is not the master run, return 
 
     
-    /*
-    // Create a directory for storing the data 
-    stringstream resultFolder;
-    resultFolder << "./result/";
-    
-    // if forlder does not exist, create one
-     if(!filesystem::exists(resultFolder.str().c_str())){
-        G4String command_mkdir = "mkdir -p " + resultFolder.str();
-        int mkdirFlag = system(command_mkdir.c_str());
-        if(mkdirFlag == -1){
-        G4cerr << "mkdir command is not performed in your system!!" << G4endl;
-        }
-     }
-
-    
-    ofstream ofp;
-    stringstream resultFileName;
-
-    resultFileName << resultFolder.str() << "data.dat";
-
-    // If file does not exist, create file and add header
-    if(!filesystem::exists(resultFileName.str().c_str())){
-        ofp.open(resultFileName.str().c_str());
-        ofp << "Thickness(um) Edep(MeV) Error(%) KinecticEnergy(MeV) ElectronsInSi ElectronsInMetal ElectronHolePairs" << G4endl;
-    } else {
-        ofp.open(resultFileName.str().c_str(),ios_base::app);
-    }
-
-    Run* theRun = (Run*)aRun;
-    //Calculate mean Edep and error
-
-    G4double eDep = theRun->GetEDep()/(MeV);
-    G4double nEvent = theRun->GetNEvent();
-    G4double squaredEdep = theRun->GetSquaredEDep();
-    G4double meanEDep = eDep/nEvent;
-    G4double varianceEdep = (squaredEdep/nEvent - (meanEDep*meanEDep)/nEvent)/(nEvent-1);
-    G4double primaryEnergy = theRun->GetKineticEnergy()/(MeV);
-
-    ofp << detectorConstruction->GetSensitiveThickness()/(um) << " " << meanEDep/(MeV) << " " 
-        << sqrt(sqrt(varianceEdep*varianceEdep)) << " " << primaryEnergy << " " << electronsInSensitive << " " << electronsInMetal << " " << electronHolePairs << " " << G4endl;
-
-    ofp.close();
-*/
 }
 
 void RunAction::BookHisto() {

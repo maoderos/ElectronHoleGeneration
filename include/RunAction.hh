@@ -7,15 +7,12 @@
 
 class DetectorConstruction;
 class PrimaryGeneratorAction;
-class Run;
 
 class RunAction: public G4UserRunAction
 {
     public:
         RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primary = nullptr);
         ~RunAction();
-
-        virtual G4Run* GenerateRun();
 
         void BeginOfRunAction(const G4Run*);
         void EndOfRunAction(const G4Run*);
@@ -26,7 +23,6 @@ class RunAction: public G4UserRunAction
         DetectorConstruction* detectorConstruction;
         PrimaryGeneratorAction* primary;
         G4AnalysisManager* analysisManager;
-        Run* run;
 }; 
 
 #endif

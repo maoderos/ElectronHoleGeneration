@@ -23,6 +23,6 @@ void ActionInitialization::Build() const
   PrimaryGeneratorAction* primary = new PrimaryGeneratorAction();
   SetUserAction(primary);
   SetUserAction(new RunAction(detector, primary));
-  SetUserAction(new SteppingAction);
+  SetUserAction(new SteppingAction(detector, primary));
 }
 #endif

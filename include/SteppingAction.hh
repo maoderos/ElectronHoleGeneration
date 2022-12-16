@@ -3,12 +3,18 @@
 
 #include "G4UserSteppingAction.hh"
 
+class DetectorConstruction;
+class PrimaryGeneratorAction;
+
 class SteppingAction: public G4UserSteppingAction {
   public:
-    SteppingAction();
+    SteppingAction(DetectorConstruction*, PrimaryGeneratorAction*);
     virtual ~SteppingAction();
 
     virtual void UserSteppingAction(const G4Step*);
+  private:
+    DetectorConstruction* det;
+    PrimaryGeneratorAction* primary;
 
 };
 
