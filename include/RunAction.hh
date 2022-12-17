@@ -18,8 +18,6 @@ class RunAction: public G4UserRunAction
         void EndOfRunAction(const G4Run*);
     
     private:
-        void BookHisto();
-  
         DetectorConstruction* detectorConstruction;
         PrimaryGeneratorAction* primary;
         G4AnalysisManager* analysisManager;

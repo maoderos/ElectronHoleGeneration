@@ -50,6 +50,7 @@ void DetectorConstruction::DefineMaterials(){
     electronHolePairEnergyMaterial["SiC"] = 8.4*eV; //doi: 10.3390/s18072289
 
     sensitiveMaterial = sicMaterial;
+    electronHolePairEnergy = electronHolePairEnergyMaterial["SiC"];
 }
 
 G4VPhysicalVolume* DetectorConstruction::Construct(){

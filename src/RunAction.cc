@@ -13,10 +13,41 @@
 using namespace std;
 
 RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primary) : G4UserRunAction(), detectorConstruction(_det), primary(_primary), analysisManager(0)
-{}
+{
+
+  analysisManager = G4AnalysisManager::Instance();
+  analysisManager->SetDefaultFileType("root");
+  analysisManager->SetVerboseLevel(1);
+  analysisManager->SetActivation(true);  // enable inactivation of histograms
+   // Only merge in MT mode to avoid warning when running in Sequential mode
+  #ifdef G4MULTITHREADED
+    analysisManager->SetNtupleMerging(true);
+  #endif
+  //Create directory for storing data
+  analysisManager->CreateNtuple("PrimaryParticle", "PrimaryParticle");
+  analysisManager->CreateNtupleDColumn("fEdep");
+  analysisManager->CreateNtupleDColumn("fEdepIoni");
+  analysisManager->CreateNtupleDColumn("fEdepNiel");
+  analysisManager->CreateNtupleDColumn("fPrimaryEnergy");
+  analysisManager->CreateNtupleSColumn("fMaterial");
+  analysisManager->FinishNtuple();
+  
+  analysisManager->CreateNtuple("Electron-Hole", "Electron-Hole");
+  analysisManager->CreateNtupleIColumn("fNumberEH");
+  analysisManager->CreateNtupleDColumn("fXPos");
+  analysisManager->CreateNtupleDColumn("fYPos");
+  analysisManager->CreateNtupleDColumn("fZPos");
+  analysisManager->CreateNtupleSColumn("fMaterial");
+  analysisManager->CreateNtupleDColumn("fPrimaryEnergy");
+  analysisManager->FinishNtuple();
+  G4String fileName = "output.root";
+  analysisManager->OpenFile(fileName);
+
+}
 
 RunAction::~RunAction()
 {}
+
 
 void RunAction::BeginOfRunAction(const G4Run* aRun) {
 
@@ -25,54 +56,20 @@ void RunAction::BeginOfRunAction(const G4Run* aRun) {
     G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
 
   }
-    
     if (primary == nullptr) return;
     // add info to Run object
     cout << "Finished BeginOfRunAction" << endl;
 }
 
 void RunAction::EndOfRunAction(const G4Run* aRun) {
-    cout << "End of RunAction" << endl;
-    /*
-    if(analysisManager->IsActive()) {
-      analysisManager->Write();
-      analysisManager->CloseFile();
-    }
-    analysisManager->Clear();
-    */
-    if (!IsMaster()) return; // if is not the master run, return 
+  
+  analysisManager = G4AnalysisManager::Instance();
+  analysisManager->Write();
+  analysisManager->CloseFile();
+ 
+  if (!IsMaster()) return; // if is not the master run, return 
+  std::cout << "End of RunAction" << std::endl;
 
     
 }
-
-void RunAction::BookHisto() {
-  // Create or get analysis manager
-  std::cout << "BookHisto" << std::endl;
-  analysisManager = G4AnalysisManager::Instance();
-  analysisManager->SetDefaultFileType("root");
-  analysisManager->SetVerboseLevel(1);
-  analysisManager->SetActivation(true);  // enable inactivation of histograms
-  
-  analysisManager->CreateNtuple("PrimaryParticle", "PrimaryParticle");
-  analysisManager->CreateNtupleDColumn("fEdep");
-  analysisManager->CreateNtupleDColumn("fEdepIoni");
-  analysisManager->CreateNtupleDColumn("fEdepNiel");
-  analysisManager->CreateNtupleDColumn("fPrimaryEnergy");
-  analysisManager->CreateNtupleDColumn("fZPos");
-  analysisManager->CreateNtupleSColumn("fMaterial");
-  analysisManager->SetNtupleMerging(true); //So that all is joined in one file
-  analysisManager->FinishNtuple(0);
-  
-  analysisManager->CreateNtuple("Electron-Hole", "Electron-Hole");
-  analysisManager->CreateNtupleIColumn("fNumberEH");
-  analysisManager->CreateNtupleDColumn("fXPos");
-  analysisManager->CreateNtupleDColumn("fYPos");
-  analysisManager->CreateNtupleDColumn("fZPos");
-  analysisManager->SetNtupleMerging(true);
-  analysisManager->FinishNtuple(1);
-  G4String fileName = "output.root";
-  analysisManager->OpenFile(fileName);
-  
-}
-
 
