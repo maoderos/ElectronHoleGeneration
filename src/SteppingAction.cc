@@ -7,6 +7,7 @@
 #include "G4UnitsTable.hh"
 #include "G4Step.hh"
 #include "G4AnalysisManager.hh"
+#include "EventAction.hh"
 #include "G4SteppingManager.hh"
 #include "G4RunManager.hh"
 #include <sstream>
@@ -14,7 +15,7 @@
 
 using namespace std;
 
-SteppingAction::SteppingAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primary): G4UserSteppingAction(), det(_det), primary(_primary)
+SteppingAction::SteppingAction(EventAction* _evt, DetectorConstruction* _det, PrimaryGeneratorAction* _primary): G4UserSteppingAction(), evt(_evt), det(_det), primary(_primary)
 {}
 
 SteppingAction::~SteppingAction()
@@ -53,6 +54,7 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
     G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
     // Fill electron-hole N tuple
     if (numberOfElectronHolePairs != 0) {
+      evt->AddEHNumber(numberOfElectronHolePairs);
       analysisManager->FillNtupleIColumn(1, 0, numberOfElectronHolePairs);
       analysisManager->FillNtupleDColumn(1, 1, xPos/um);
       analysisManager->FillNtupleDColumn(1, 2, yPos/um);
@@ -62,12 +64,15 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
       analysisManager->AddNtupleRow(1);
     }
     if (step->GetTrack()->GetParentID() == 0) {
-     analysisManager->FillNtupleDColumn(0, 0, eDep/materialDensity/targetThickness);
-     analysisManager->FillNtupleDColumn(0, 1, ionizingEnergyDep/materialDensity/targetThickness);
-     analysisManager->FillNtupleDColumn(0, 2, nielEnergyDep/materialDensity/targetThickness);
-     analysisManager->FillNtupleDColumn(0, 3, primary->GetParticleGun()->GetParticleEnergy()/MeV);
-     analysisManager->FillNtupleSColumn(0, 4, materialName);  
-     analysisManager->AddNtupleRow(0);
+       evt->AddEdepTotal(eDep/materialDensity/targetThickness);
+       evt->AddEdepNiel(nielEnergyDep/materialDensity/targetThickness);
+       evt->AddEdepIonizing(ionizingEnergyDep/materialDensity/targetThickness);
+//     analysisManager->FillNtupleDColumn(0, 0, eDep/materialDensity/targetThickness);
+//     analysisManager->FillNtupleDColumn(0, 1, ionizingEnergyDep/materialDensity/targetThickness);
+//     analysisManager->FillNtupleDColumn(0, 2, nielEnergyDep/materialDensity/targetThickness);
+//     analysisManager->FillNtupleDColumn(0, 3, primary->GetParticleGun()->GetParticleEnergy()/MeV);
+//     analysisManager->FillNtupleSColumn(0, 4, materialName);  
+//     analysisManager->AddNtupleRow(0);
     }
   }
 }

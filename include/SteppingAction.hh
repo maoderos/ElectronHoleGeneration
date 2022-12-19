@@ -5,14 +5,16 @@
 
 class DetectorConstruction;
 class PrimaryGeneratorAction;
+class EventAction;
 
 class SteppingAction: public G4UserSteppingAction {
   public:
-    SteppingAction(DetectorConstruction*, PrimaryGeneratorAction*);
+    SteppingAction(EventAction*, DetectorConstruction*, PrimaryGeneratorAction*);
     virtual ~SteppingAction();
 
     virtual void UserSteppingAction(const G4Step*);
   private:
+    EventAction* evt;
     DetectorConstruction* det;
     PrimaryGeneratorAction* primary;
 
