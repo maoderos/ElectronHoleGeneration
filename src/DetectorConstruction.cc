@@ -18,7 +18,7 @@
 //G4ThreadLocal G4UniformElectricField* DetectorConstruction::fEMfield = 0;
 // Constructor
 DetectorConstruction::DetectorConstruction()
-: G4VUserDetectorConstruction(), logicWorld(0),physWorld(0), worldMaterial(0), sensitiveThickness(2*cm), materialName("SiC")
+: G4VUserDetectorConstruction(), logicWorld(0),physWorld(0), worldMaterial(0), sensitiveThickness(500*um), materialName("SiC")
 {
     detectorMessenger = new DetectorMessenger(this);
     DefineMaterials();
@@ -56,7 +56,7 @@ void DetectorConstruction::DefineMaterials(){
 G4VPhysicalVolume* DetectorConstruction::Construct(){
 
     //World Geometry
-    G4double size_xyz = 4*cm;
+    G4double size_xyz = 1*cm;
 
     G4Box* solidWorld = new G4Box("BoxWorld", 0.5*size_xyz, 0.5*size_xyz, 0.5*size_xyz);
     logicWorld = new G4LogicalVolume(solidWorld, worldMaterial,"logicWorld");
@@ -65,7 +65,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     G4cout << "Drawing target of " << sensitiveMaterial->GetName() << "material" << G4endl;
 
     G4double targetSizeXY = 2*cm;
-    solidSensitive = new G4Box("boxSensitive", targetSizeXY, targetSizeXY, 0.5*sensitiveThickness);
+    solidSensitive = new G4Box("boxSensitive", 0.5*size_xyz, 0.5*size_xyz, 0.5*sensitiveThickness);
     logicSensitive = new G4LogicalVolume(solidSensitive, sensitiveMaterial, "logicSensitive");
     physSensitive = new G4PVPlacement(0,G4ThreeVector(0,0,0.5*sensitiveThickness), logicSensitive, "Sensitive", logicWorld, false, 0, true);
 

@@ -1,0 +1,24 @@
+/run/initialize
+/gun/particle proton
+/setTarget/sensitiveThickness 500 um
+/setTarget/material SiC
+/gun/energy 1 MeV
+/run/beamOn 100
+/gun/energy 2 MeV
+/run/beamOn 100
+/gun/energy 3 MeV
+/run/beamOn 100
+/gun/energy 4 MeV
+/run/beamOn 100
+/gun/energy 5 MeV
+/run/beamOn 100
+/gun/energy 6 MeV
+/run/beamOn 100
+/gun/energy 7 MeV
+/run/beamOn 100
+/gun/energy 8 MeV
+/run/beamOn 100
+/gun/energy 9 MeV
+/run/beamOn 100
+/gun/energy 10 MeV
+/run/beamOn 100

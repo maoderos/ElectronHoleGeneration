@@ -12,6 +12,7 @@
 
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
+#include "G4String.hh"
 
 #include "Randomize.hh"
 
@@ -29,9 +30,18 @@ int main(int argc,char** argv)
   // Optionally: choose a different Random engine...
    G4Random::setTheEngine(new CLHEP::RanecuEngine);
   
+   G4String macro = "noMacro";
+   G4int nThreads = 1;
+  // Parsing argumetns 
+   for (G4int i = 1; i < argc; i=i+2) {
+     if (G4String(argv[i]) == "-m") {
+       macro = argv[i+1];
+     }
+     else if (G4String(argv[i]) == "-t") {
+       nThreads = G4UIcommand::ConvertToInt(argv[i+1]);
+     }
+   }
   // Construct the default run manager
-  //
-  G4int nThreads = 3;
   #ifdef G4MULTITHREADED
   G4MTRunManager* runManager = new G4MTRunManager;
   runManager->SetNumberOfThreads(nThreads);
@@ -74,7 +84,7 @@ int main(int argc,char** argv)
   if ( ! ui ) { 
     // batch mode
     G4String command = "/control/execute ";
-    G4String fileName = argv[1];
+    G4String fileName = macro;
     UImanager->ApplyCommand(command+fileName);
   }
   else { 

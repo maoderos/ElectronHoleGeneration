@@ -19,9 +19,9 @@ RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primar
   analysisManager->SetDefaultFileType("root");
   analysisManager->SetVerboseLevel(1);
   analysisManager->SetActivation(true);  // enable inactivation of histograms
-   // Only merge in MT mode to avoid warning when running in Sequential mode
+  // Only merge in MT mode to avoid warning when running in Sequential mode
   #ifdef G4MULTITHREADED
-    analysisManager->SetNtupleMerging(true);
+  analysisManager->SetNtupleMerging(true);
   #endif
   //Create directory for storing data
   analysisManager->CreateNtuple("PrimaryParticle", "PrimaryParticle");
@@ -31,7 +31,7 @@ RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primar
   analysisManager->CreateNtupleDColumn("fPrimaryEnergy");
   analysisManager->CreateNtupleSColumn("fMaterial");
   analysisManager->FinishNtuple();
-  
+
   analysisManager->CreateNtuple("Electron-Hole", "Electron-Hole");
   analysisManager->CreateNtupleIColumn("fNumberEH");
   analysisManager->CreateNtupleDColumn("fXPos");
@@ -40,13 +40,15 @@ RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primar
   analysisManager->CreateNtupleSColumn("fMaterial");
   analysisManager->CreateNtupleDColumn("fPrimaryEnergy");
   analysisManager->FinishNtuple();
-  G4String fileName = "output.root";
-  analysisManager->OpenFile(fileName);
 
+  //G4String fileName =  "output.root";
+  //analysisManager->OpenFile(fileName);
 }
 
 RunAction::~RunAction()
-{}
+{
+//  analysisManager->CloseFile();
+}
 
 
 void RunAction::BeginOfRunAction(const G4Run* aRun) {
@@ -56,20 +58,26 @@ void RunAction::BeginOfRunAction(const G4Run* aRun) {
     G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
 
   }
-    if (primary == nullptr) return;
+
+  G4int runId = aRun->GetRunID();
+  std::stringstream strRunId;
+  strRunId << runId;
+  G4String fileName =  "output_" + detectorConstruction->GetMaterialName() + "_" + strRunId.str() + ".root";
+  analysisManager->OpenFile(fileName);
+
+  if (primary == nullptr) return;
     // add info to Run object
     cout << "Finished BeginOfRunAction" << endl;
 }
 
 void RunAction::EndOfRunAction(const G4Run* aRun) {
-  
-  analysisManager = G4AnalysisManager::Instance();
+ 
   analysisManager->Write();
   analysisManager->CloseFile();
- 
   if (!IsMaster()) return; // if is not the master run, return 
   std::cout << "End of RunAction" << std::endl;
 
     
 }
+
 

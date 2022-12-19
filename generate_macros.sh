@@ -2,11 +2,13 @@
 #default versions
 Emin=1;
 Emax=10;
-Thick=25;
+Thick=500;
 Dstep=1;
 Nevent=100;
+Particle=proton;
+Material=SiC;
+step=1;
 Name=data-renamed;
-
 Help()
 {
 
@@ -27,13 +29,20 @@ Help()
 		
 		--Nevent <value>
 			Number of events. (default: 100)
+
+		--Particle <value>
+		  Choose the primary particle. (default: proton)
+			Options: proton
+
+		--Material
+		  Choose the target material. (default: SiC)
+			Options: SiC, C, Si
 		
 		--Name <value>
 			Name of file. (default: data-renamed)
 	END
 	exit
 }
-
 
 while [ $# -gt 0 ]; do
 	case $1 in
@@ -61,6 +70,14 @@ while [ $# -gt 0 ]; do
 			Nevent=$2
 			shift 2
 			;;
+		--Particle)
+			Particle=$2
+			shift 2
+			;;
+		--Material)
+			Material=$2
+			shift 2
+			;;
 		--Name)
 			Name=$2
 			shift 2
@@ -68,23 +85,24 @@ while [ $# -gt 0 ]; do
 	esac
 done 
 	
-
 #Create macro and write it
 #first loop in thickness
 
 echo "/run/initialize" > macro_script.in
-echo "/gun/particle proton" >> macro_script.in
+#echo "/analysis/setDefaultFileType root" >> macro_script.in
+#echo "/analysis/openFile $Particle" >> macro_script.in
+echo "/gun/particle $Particle" >> macro_script.in
 echo "/setTarget/sensitiveThickness $Thick um" >> macro_script.in
-for ((j = $Emin; j <= $Emax; j+=$step)); do  
+echo "/setTarget/material $Material" >> macro_script.in
+for ((j=$Emin; j<=$Emax; j+=$step)); do  
   echo "/gun/energy $j MeV" >> macro_script.in
   echo "/run/beamOn $Nevent" >> macro_script.in
-  echo "/control/shell mv bragg_output.out EdepProfile_${j}MeV_${Thick}um.out" >> macro_script.in
-  echo "/control/shell mv output.root output_${j}MeV_${Thick}um.root" >> macro_script.in
-	echo "/run/initialize" >> macro_script.in
+#	echo "/analysis/write" >> macro_script.in
+#	echo "/analysis/reset" >> macro_script.in
 done
 
 
 #run geant4 simulation
 
-./SiDetector macro_script.in
-mv result/data.dat result/${Name}.dat
+#./SiDetector macro_script.in
+#mv result/data.dat result/${Name}.dat
