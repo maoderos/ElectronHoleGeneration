@@ -24,7 +24,7 @@ void ActionInitialization::Build() const
   PrimaryGeneratorAction* primary = new PrimaryGeneratorAction();
   SetUserAction(primary);
   SetUserAction(new RunAction(detector, primary));
-  EventAction* eventAction = new EventAction(primary);
+  EventAction* eventAction = new EventAction(detector, primary);
   SetUserAction(eventAction);
   SetUserAction(new SteppingAction(eventAction, detector, primary));
 }

@@ -45,7 +45,7 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
   if (ionizingEnergyDep < 0) {
     std::cout << "ABSURD" << std::endl;
   }
-  if (ionizingEnergyDep > electronHolePairEnergy) {
+  if (ionizingEnergyDep >= electronHolePairEnergy) {
     // Number of e-h 
     numberOfElectronHolePairs = ionizingEnergyDep/electronHolePairEnergy;
   }
@@ -67,12 +67,6 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
        evt->AddEdepTotal(eDep/materialDensity/targetThickness);
        evt->AddEdepNiel(nielEnergyDep/materialDensity/targetThickness);
        evt->AddEdepIonizing(ionizingEnergyDep/materialDensity/targetThickness);
-//     analysisManager->FillNtupleDColumn(0, 0, eDep/materialDensity/targetThickness);
-//     analysisManager->FillNtupleDColumn(0, 1, ionizingEnergyDep/materialDensity/targetThickness);
-//     analysisManager->FillNtupleDColumn(0, 2, nielEnergyDep/materialDensity/targetThickness);
-//     analysisManager->FillNtupleDColumn(0, 3, primary->GetParticleGun()->GetParticleEnergy()/MeV);
-//     analysisManager->FillNtupleSColumn(0, 4, materialName);  
-//     analysisManager->AddNtupleRow(0);
     }
   }
 }

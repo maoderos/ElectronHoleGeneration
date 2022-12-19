@@ -24,15 +24,16 @@ RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primar
   analysisManager->SetNtupleMerging(true);
   #endif
   //Create directory for storing data
-  analysisManager->CreateNtuple("PrimaryParticle", "PrimaryParticle");
+  analysisManager->CreateNtuple("Event", "Event");
   analysisManager->CreateNtupleDColumn("fEdep");
   analysisManager->CreateNtupleDColumn("fEdepIoni");
   analysisManager->CreateNtupleDColumn("fEdepNiel");
   analysisManager->CreateNtupleDColumn("fPrimaryEnergy");
   analysisManager->CreateNtupleSColumn("fMaterial");
+  analysisManager->CreateNtupleIColumn("fNumberEH");
   analysisManager->FinishNtuple();
 
-  analysisManager->CreateNtuple("Electron-Hole", "Electron-Hole");
+  analysisManager->CreateNtuple("Step", "Step");
   analysisManager->CreateNtupleIColumn("fNumberEH");
   analysisManager->CreateNtupleDColumn("fXPos");
   analysisManager->CreateNtupleDColumn("fYPos");

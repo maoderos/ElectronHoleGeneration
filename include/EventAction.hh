@@ -5,12 +5,13 @@
 #include "G4UserEventAction.hh"
 #include "globals.hh"
 
+class DetectorConstruction;
 class PrimaryGeneratorAction;
 
 class EventAction: public G4UserEventAction
 {
   public:
-    EventAction(PrimaryGeneratorAction*);
+    EventAction(DetectorConstruction*, PrimaryGeneratorAction*);
     ~EventAction();
 
     virtual void BeginOfEventAction(const G4Event*);
@@ -23,6 +24,7 @@ class EventAction: public G4UserEventAction
     
 
   private:
+    DetectorConstruction* det;
     PrimaryGeneratorAction* primary;
     G4double eDepTotal;
     G4double eDepNiel;
