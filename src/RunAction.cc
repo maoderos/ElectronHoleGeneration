@@ -17,7 +17,7 @@ RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primar
 
   analysisManager = G4AnalysisManager::Instance();
   analysisManager->SetDefaultFileType("root");
-  analysisManager->SetVerboseLevel(1);
+  analysisManager->SetVerboseLevel(0);
   analysisManager->SetActivation(true);  // enable inactivation of histograms
   // Only merge in MT mode to avoid warning when running in Sequential mode
   #ifdef G4MULTITHREADED
