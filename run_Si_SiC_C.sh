@@ -6,7 +6,7 @@ mkdir -p results;
 
 materials=(Si SiC C);
 
-for i in "$materials[@]"
+for i in "${materials[@]}"
 do
 	echo "Simulating $i material"
   mkdir -p results/$i;

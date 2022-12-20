@@ -55,7 +55,7 @@ RunAction::~RunAction()
 void RunAction::BeginOfRunAction(const G4Run* aRun) {
 
   if(IsMaster()) {
-    cout << "Begin of RunAction" << endl;
+    //cout << "Begin of RunAction" << endl;
     G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
 
   }
@@ -68,7 +68,7 @@ void RunAction::BeginOfRunAction(const G4Run* aRun) {
 
   if (primary == nullptr) return;
     // add info to Run object
-    cout << "Finished BeginOfRunAction" << endl;
+    //cout << "Finished BeginOfRunAction" << endl;
 }
 
 void RunAction::EndOfRunAction(const G4Run* aRun) {
@@ -76,7 +76,7 @@ void RunAction::EndOfRunAction(const G4Run* aRun) {
   analysisManager->Write();
   analysisManager->CloseFile();
   if (!IsMaster()) return; // if is not the master run, return 
-  std::cout << "End of RunAction" << std::endl;
+  //std::cout << "End of RunAction" << std::endl;
 
     
 }
