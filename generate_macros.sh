@@ -8,7 +8,7 @@ Nevent=100;
 Particle=proton;
 Material=SiC;
 step=1;
-Name=data-renamed;
+Name=macro_script;
 Help()
 {
 
@@ -39,7 +39,7 @@ Help()
 			Options: SiC, C, Si
 		
 		--Name <value>
-			Name of file. (default: data-renamed)
+			Name of file. (default: macro_script)
 	END
 	exit
 }
@@ -88,21 +88,21 @@ done
 #Create macro and write it
 #first loop in thickness
 
-echo "/run/initialize" > macro_script.in
-#echo "/analysis/setDefaultFileType root" >> macro_script.in
-#echo "/analysis/openFile $Particle" >> macro_script.in
-echo "/gun/particle $Particle" >> macro_script.in
-echo "/setTarget/sensitiveThickness $Thick um" >> macro_script.in
-echo "/setTarget/material $Material" >> macro_script.in
+echo "/run/initialize" > ${Name}.in
+#echo "/analysis/setDefaultFileType root" >> ${Name}.in
+#echo "/analysis/openFile $Particle" >> ${Name}.in
+echo "/gun/particle $Particle" >> ${Name}.in
+echo "/setTarget/sensitiveThickness $Thick um" >> ${Name}.in
+echo "/setTarget/material $Material" >> ${Name}.in
 for ((j=$Emin; j<=$Emax; j+=$step)); do  
-  echo "/gun/energy $j MeV" >> macro_script.in
-  echo "/run/beamOn $Nevent" >> macro_script.in
-#	echo "/analysis/write" >> macro_script.in
-#	echo "/analysis/reset" >> macro_script.in
+  echo "/gun/energy $j MeV" >> ${Name}.in
+  echo "/run/beamOn $Nevent" >> ${Name}.in
+#	echo "/analysis/write" >> ${Name}.in
+#	echo "/analysis/reset" >> ${Name}.in
 done
 
 
 #run geant4 simulation
 
-#./SiDetector macro_script.in
+#./SiDetector ${Name}.in
 #mv result/data.dat result/${Name}.dat
