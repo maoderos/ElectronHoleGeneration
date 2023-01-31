@@ -24,7 +24,7 @@ def line_filter(line):
 def format_file(filename,init=25,end=180): # Format SRIM tables and return lists
     file = open("stoppingPowerData/{0}".format(filename), "r") 
     file_write = open("stoppingPowerData/format_{0}".format(filename), "w")
-    file_write.write("IonEnergy dE/dxElec dE/dxNuc ProjectedRange LongitudinalStraggling LateralStraggling\n")
+    file_write.write("IonEnergy(MeV) dE/dxElec(MeV/(mg/cm2)) dE/dxNuc(MeV/(mg/cm2)) ProjectedRange(um) LongitudinalStraggling(um) LateralStraggling(um)\n")
     for i, line in enumerate(file):
         if i in np.arange(init, end): 
             correct_line = line_filter(line)
