@@ -8,8 +8,9 @@
 #endif
 
 #include "G4UImanager.hh"
-#include "FTFP_BERT_liv.hh"
-
+#include "G4PhysListFactory.hh"
+#include "G4VModularPhysicsList.hh"
+#include "G4StepLimiterPhysics.hh"
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 #include "G4String.hh"
@@ -56,8 +57,11 @@ int main(int argc,char** argv)
   runManager->SetUserInitialization(detector);
 
   // Physics list
-  //runManager->SetUserInitialization(new MicroElecSiPhysics);
-  runManager->SetUserInitialization(new FTFP_BERT_liv);
+  G4PhysListFactory physListFactory;
+  const G4String plName = "FTFP_BERT_EMZ";
+  G4VModularPhysicsList* pList = physListFactory.GetReferencePhysList(plName);
+  pList->RegisterPhysics(new G4StepLimiterPhysics());
+  runManager->SetUserInitialization(pList);
     
   // User action initialization
   runManager->SetUserInitialization(new ActionInitialization(detector));
