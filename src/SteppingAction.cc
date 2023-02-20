@@ -38,7 +38,11 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
   G4String materialName = det->GetMaterialName();
   G4double targetThickness = det->GetSensitiveThickness()/cm;
   G4double materialDensity = det->GetSensitiveMaterial()->GetDensity()/(g/cm3);
-
+  // Enable for validation purposes]
+  /*
+  G4double stepLength = step->GetStepLength();
+  G4cout << "STEP LENGTH: " << stepLength/nm << " nm" << G4endl; 
+  */
   // Calculate the number of electron-hole pairs in the step
   G4double electronHolePairEnergy = det->GetElectronHolePairEnergy();
   G4int numberOfElectronHolePairs = 0;

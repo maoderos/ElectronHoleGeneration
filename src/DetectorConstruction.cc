@@ -70,9 +70,13 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     physSensitive = new G4PVPlacement(0,G4ThreeVector(0,0,0.5*sensitiveThickness), logicSensitive, "Sensitive", logicWorld, false, 0, true);
 
     // Set step limiter for the sensitive volume
-    G4double maxStep = 0.005*sensitiveThickness;
+    //G4double maxStep = 0.005*sensitiveThickness;
+    G4double maxStep = 0.3*nm;
     G4UserLimits* sensitiveUserLimit = new G4UserLimits(maxStep);
     logicSensitive->SetUserLimits(sensitiveUserLimit);
+    // Enable for validation purposes
+    //G4cout << "USER STEP LIMIT: " << maxStep/nm  << " nm"<< G4endl;
+    
     // World Visualization
     G4VisAttributes* worldVis = new G4VisAttributes();
     worldVis->SetColor(0.1, 0.3, 0.8, 0.5);
