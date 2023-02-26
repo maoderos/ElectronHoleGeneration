@@ -34,7 +34,7 @@ void EventAction::EndOfEventAction(const G4Event*)
   analysisManager->FillNtupleDColumn(0, 2, eDepNiel);
   analysisManager->FillNtupleDColumn(0, 3, primary->GetParticleGun()->GetParticleEnergy()/MeV);
   analysisManager->FillNtupleSColumn(0, 4, det->GetMaterialName());  
-  analysisManager->FillNtupleIColumn(0, 5, numEH);
+  analysisManager->FillNtupleIColumn(0, 5, (eDepTotal/eV)*1.6e-4/(det->GetElectronHolePairEnergy()/eV)); // Convertion to fC
   analysisManager->AddNtupleRow(0);
 
 

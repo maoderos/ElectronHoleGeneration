@@ -46,19 +46,17 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
   // Calculate the number of electron-hole pairs in the step
   G4double electronHolePairEnergy = det->GetElectronHolePairEnergy();
   G4int numberOfElectronHolePairs = 0;
-  if (ionizingEnergyDep < 0) {
-    std::cout << "ABSURD" << std::endl;
-  }
+  /*
   if (ionizingEnergyDep >= electronHolePairEnergy) {
     // Number of e-h 
     numberOfElectronHolePairs = ionizingEnergyDep/electronHolePairEnergy;
   }
+  */
   if (step->GetTrack()->GetVolume()->GetName() == "Sensitive") {
 
     G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
     // Fill electron-hole N tuple
     if (numberOfElectronHolePairs != 0) {
-      evt->AddEHNumber(numberOfElectronHolePairs);
       analysisManager->FillNtupleIColumn(1, 0, numberOfElectronHolePairs);
       analysisManager->FillNtupleDColumn(1, 1, xPos/um);
       analysisManager->FillNtupleDColumn(1, 2, yPos/um);

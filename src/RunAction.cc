@@ -30,11 +30,11 @@ RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primar
   analysisManager->CreateNtupleDColumn("fEdepNiel");
   analysisManager->CreateNtupleDColumn("fPrimaryEnergy");
   analysisManager->CreateNtupleSColumn("fMaterial");
-  analysisManager->CreateNtupleIColumn("fNumberEH");
+  analysisManager->CreateNtupleIColumn("fCharge");
   analysisManager->FinishNtuple();
 
   analysisManager->CreateNtuple("Step", "Step");
-  analysisManager->CreateNtupleIColumn("fNumberEH");
+  analysisManager->CreateNtupleIColumn("fCharge");
   analysisManager->CreateNtupleDColumn("fXPos");
   analysisManager->CreateNtupleDColumn("fYPos");
   analysisManager->CreateNtupleDColumn("fZPos");
@@ -42,15 +42,10 @@ RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primar
   analysisManager->CreateNtupleDColumn("fPrimaryEnergy");
   analysisManager->FinishNtuple();
 
-  //G4String fileName =  "output.root";
-  //analysisManager->OpenFile(fileName);
 }
 
 RunAction::~RunAction()
-{
-//  analysisManager->CloseFile();
-}
-
+{}
 
 void RunAction::BeginOfRunAction(const G4Run* aRun) {
 

@@ -9,6 +9,7 @@ Particle=proton;
 Material=SiC;
 step=1;
 Name=macro_script;
+NoMSCSEC=false;
 Help()
 {
 
@@ -34,12 +35,16 @@ Help()
 		  Choose the primary particle. (default: proton)
 			Options: proton
 
-		--Material
+		--Material <Symbol>
 		  Choose the target material. (default: SiC)
 			Options: SiC, C, Si
 		
 		--Name <value>
 			Name of file. (default: macro_script)
+
+		--NoMSCSEC
+			Disable multiple scattering and increase the cut for generating secondary particles (default: disabled)
+
 	END
 	exit
 }
@@ -82,6 +87,10 @@ while [ $# -gt 0 ]; do
 			Name=$2
 			shift 2
 			;;
+		--NoMSCSEC)
+			NoMSCSEC=true
+			shift 1 
+			;;
 	esac
 done 
 	
@@ -89,20 +98,15 @@ done
 #first loop in thickness
 
 echo "/run/initialize" > ${Name}.in
-#echo "/analysis/setDefaultFileType root" >> ${Name}.in
-#echo "/analysis/openFile $Particle" >> ${Name}.in
 echo "/gun/particle $Particle" >> ${Name}.in
+if $NoMSCSEC; then 
+	echo "/process/inactivate msc" >> ${Name}.in
+	echo "/run/setCut 1 km" >> ${Name}.in
+fi
 echo "/setTarget/sensitiveThickness $Thick um" >> ${Name}.in
 echo "/setTarget/material $Material" >> ${Name}.in
 for ((j=$Emin; j<=$Emax; j+=$step)); do  
   echo "/gun/energy $j MeV" >> ${Name}.in
   echo "/run/beamOn $Nevent" >> ${Name}.in
-#	echo "/analysis/write" >> ${Name}.in
-#	echo "/analysis/reset" >> ${Name}.in
 done
 
-
-#run geant4 simulation
-
-#./SiDetector ${Name}.in
-#mv result/data.dat result/${Name}.dat
