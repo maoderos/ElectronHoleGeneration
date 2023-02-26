@@ -1,0 +1,6 @@
+/run/initialize
+/gun/particle proton
+/setTarget/sensitiveThickness 500 um
+/setTarget/material SiC
+/gun/energy 2500 MeV
+/run/beamOn 1000000
