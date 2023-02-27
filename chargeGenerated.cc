@@ -7,6 +7,7 @@
 #include <TLegend.h>
 #include "TString.h"
 #include <vector>
+#include <iostream>
 
 void chargeGenerated(){
 
@@ -17,7 +18,7 @@ void chargeGenerated(){
   TFile* pFile = new TFile(hFilename, "recreate");
   // Loop in materials
   for(size_t i = 0; i < materials.size(); i++) {
-
+    std::cout << "----------- " << materials[i].c_str() << " -----------" << std::endl;
     auto hTitle = Form("%s Charge Deposit", materials[i].c_str());
     TH1D* h1 = new TH1D(materials[i].c_str(), hTitle, 100, 0.0, 15);
     h1->GetXaxis()->SetTitle("Charge [fC]");
@@ -34,7 +35,25 @@ void chargeGenerated(){
       tree->GetEntry(iEntry);
       h1->Fill(chargeDeposited);
     }
-    h1->SaveAs(hFilename);
-  }
+    auto infoFit = h1->Fit("landau", "S");
+    TF1* f1 = h1->GetFunction("landau");
+    
+    /*
+    std::ostringstream mpv;
+    mpv << "MPV = " << f1->GetParameter(1) << "#pm " << f1->GetParError(1) << " fC";  
+    //std::cout >> mpv.str().c_str() >> std::endl;
+    */
 
+    auto legend = new TLegend(0.7, 0.7, 0.9, 0.9);
+    TCanvas* c1 = new TCanvas();
+    c1->cd();
+    gStyle->SetOptStat(0);
+    h1->Draw();
+    legend->AddEntry(h1, "Simulation");
+    legend->AddEntry(f1, "Landau distribution");
+    legend->Draw();
+    auto outputFile = Form("%s.pdf", materials[i].c_str());
+    c1->SaveAs(outputFile);
+    c1->SaveAs(hFilename);
+  } 
 }
