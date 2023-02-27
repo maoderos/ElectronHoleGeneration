@@ -17,8 +17,8 @@ class EventAction: public G4UserEventAction
     virtual void BeginOfEventAction(const G4Event*);
     virtual void EndOfEventAction(const G4Event*);
 
-    void AddEdepTotal(G4double eDep) {eDepTotalPrimary += eDep;};
-    void AddEdepTotalPrimary(G4double eDep) {eDepTotal += eDep;};
+    void AddEdepTotal(G4double eDep) {eDepTotal += eDep;};
+    void AddEdepTotalPrimary(G4double eDep) {eDepTotalPrimary += eDep;};
     void AddEdepNiel(G4double eDep) {eDepNiel += eDep;};
     void AddEdepIonizing(G4double eDep) {eDepIonizing += eDep;};
     
