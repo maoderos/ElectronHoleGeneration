@@ -25,6 +25,7 @@ RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primar
   #endif
   //Create directory for storing data
   analysisManager->CreateNtuple("Event", "Event");
+  analysisManager->CreateNtupleDColumn("fdEdxPrimary");
   analysisManager->CreateNtupleDColumn("fEdep");
   analysisManager->CreateNtupleDColumn("fEdepIoni");
   analysisManager->CreateNtupleDColumn("fEdepNiel");
