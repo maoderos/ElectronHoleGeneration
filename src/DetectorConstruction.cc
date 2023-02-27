@@ -64,7 +64,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
 
     G4cout << "Drawing target of " << sensitiveMaterial->GetName() << "material" << G4endl;
 
-    G4double targetSizeXY = 2*cm;
     solidSensitive = new G4Box("boxSensitive", 0.5*size_xyz, 0.5*size_xyz, 0.5*sensitiveThickness);
     logicSensitive = new G4LogicalVolume(solidSensitive, sensitiveMaterial, "logicSensitive");
     physSensitive = new G4PVPlacement(0,G4ThreeVector(0,0,0.5*sensitiveThickness), logicSensitive, "Sensitive", logicWorld, false, 0, true);

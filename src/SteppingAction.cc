@@ -27,10 +27,6 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
   if (eDep <= 0) return;
   G4double nielEnergyDep = step->GetNonIonizingEnergyDeposit();
   G4double ionizingEnergyDep = eDep - nielEnergyDep;
-  // Get the mean point in the step.
-  const G4ParticleDefinition* particle = step->GetTrack()->GetParticleDefinition();
-  G4int trackID = step->GetTrack()->GetTrackID();
-  G4int eventNumber = G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
   G4String materialName = det->GetMaterialName();
   G4double targetThickness = det->GetSensitiveThickness()/cm;
   G4double materialDensity = det->GetSensitiveMaterial()->GetDensity()/(g/cm3);
