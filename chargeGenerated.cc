@@ -12,7 +12,7 @@
 void chargeGenerated(){
 
   //std::vector<std::string> materials = {"Si", "SiC", "C"};
-  std::vector<std::string> materials = {"C"};
+  std::vector<std::string> materials = {"Si"};
   //Create new file to store histograms
   auto hFilename = "DepositedCharge.root";
   TFile* pFile = new TFile(hFilename, "recreate");
@@ -20,7 +20,7 @@ void chargeGenerated(){
   for(size_t i = 0; i < materials.size(); i++) {
     std::cout << "----------- " << materials[i].c_str() << " -----------" << std::endl;
     auto h1Title = Form("%s Charge Deposit", materials[i].c_str());
-    TH1D* h1 = new TH1D(materials[i].c_str(), h1Title, 100, 0.0, 2);
+    TH1D* h1 = new TH1D(materials[i].c_str(), h1Title, 100, 0.0, 6);
     h1->GetXaxis()->SetTitle("Charge [fC]");
     auto h2Title = Form("%s Energy Deposit", materials[i].c_str());
     TH1D* h2 = new TH1D(materials[i].c_str(), h2Title, 100, 0.0, 0.2);
@@ -61,8 +61,8 @@ void chargeGenerated(){
     c1->cd(2);
     auto legend2 = new TLegend(0.7, 0.7, 0.9, 0.9);
     h2->Draw();
-    legend2->AddEntry(h1, "Simulation");
-    legend2->AddEntry(f1, "Landau distribution");
+    legend2->AddEntry(h2, "Simulation");
+    legend2->AddEntry(f2, "Landau distribution");
     legend2->Draw();
 
     
