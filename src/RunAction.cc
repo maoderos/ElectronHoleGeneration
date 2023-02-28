@@ -31,7 +31,7 @@ RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primar
   analysisManager->CreateNtupleDColumn("fEdepNiel");
   analysisManager->CreateNtupleDColumn("fPrimaryEnergy");
   analysisManager->CreateNtupleSColumn("fMaterial");
-  analysisManager->CreateNtupleIColumn("fCharge");
+  analysisManager->CreateNtupleDColumn("fCharge");
   analysisManager->FinishNtuple();
 
   analysisManager->CreateNtuple("Step", "Step");
