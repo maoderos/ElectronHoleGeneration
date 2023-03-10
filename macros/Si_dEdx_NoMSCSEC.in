@@ -1,0 +1,106 @@
+/run/initialize
+/gun/particle proton
+/process/inactivate msc
+/run/setCut 1 km
+/setTarget/sensitiveThickness 500 um
+/setTarget/material Si
+/gun/energy 20 MeV
+/run/beamOn 100000
+/gun/energy 120 MeV
+/run/beamOn 100000
+/gun/energy 220 MeV
+/run/beamOn 100000
+/gun/energy 320 MeV
+/run/beamOn 100000
+/gun/energy 420 MeV
+/run/beamOn 100000
+/gun/energy 520 MeV
+/run/beamOn 100000
+/gun/energy 620 MeV
+/run/beamOn 100000
+/gun/energy 720 MeV
+/run/beamOn 100000
+/gun/energy 820 MeV
+/run/beamOn 100000
+/gun/energy 920 MeV
+/run/beamOn 100000
+/gun/energy 1020 MeV
+/run/beamOn 100000
+/gun/energy 1120 MeV
+/run/beamOn 100000
+/gun/energy 1220 MeV
+/run/beamOn 100000
+/gun/energy 1320 MeV
+/run/beamOn 100000
+/gun/energy 1420 MeV
+/run/beamOn 100000
+/gun/energy 1520 MeV
+/run/beamOn 100000
+/gun/energy 1620 MeV
+/run/beamOn 100000
+/gun/energy 1720 MeV
+/run/beamOn 100000
+/gun/energy 1820 MeV
+/run/beamOn 100000
+/gun/energy 1920 MeV
+/run/beamOn 100000
+/gun/energy 2020 MeV
+/run/beamOn 100000
+/gun/energy 2120 MeV
+/run/beamOn 100000
+/gun/energy 2220 MeV
+/run/beamOn 100000
+/gun/energy 2320 MeV
+/run/beamOn 100000
+/gun/energy 2420 MeV
+/run/beamOn 100000
+/gun/energy 2520 MeV
+/run/beamOn 100000
+/gun/energy 2620 MeV
+/run/beamOn 100000
+/gun/energy 2720 MeV
+/run/beamOn 100000
+/gun/energy 2820 MeV
+/run/beamOn 100000
+/gun/energy 2920 MeV
+/run/beamOn 100000
+/gun/energy 3020 MeV
+/run/beamOn 100000
+/gun/energy 3120 MeV
+/run/beamOn 100000
+/gun/energy 3220 MeV
+/run/beamOn 100000
+/gun/energy 3320 MeV
+/run/beamOn 100000
+/gun/energy 3420 MeV
+/run/beamOn 100000
+/gun/energy 3520 MeV
+/run/beamOn 100000
+/gun/energy 3620 MeV
+/run/beamOn 100000
+/gun/energy 3720 MeV
+/run/beamOn 100000
+/gun/energy 3820 MeV
+/run/beamOn 100000
+/gun/energy 3920 MeV
+/run/beamOn 100000
+/gun/energy 4020 MeV
+/run/beamOn 100000
+/gun/energy 4120 MeV
+/run/beamOn 100000
+/gun/energy 4220 MeV
+/run/beamOn 100000
+/gun/energy 4320 MeV
+/run/beamOn 100000
+/gun/energy 4420 MeV
+/run/beamOn 100000
+/gun/energy 4520 MeV
+/run/beamOn 100000
+/gun/energy 4620 MeV
+/run/beamOn 100000
+/gun/energy 4720 MeV
+/run/beamOn 100000
+/gun/energy 4820 MeV
+/run/beamOn 100000
+/gun/energy 4920 MeV
+/run/beamOn 100000
