@@ -12,7 +12,7 @@
 void chargeGenerated(){
 
   //std::vector<std::string> materials = {"Si", "SiC", "C"};
-  std::vector<std::string> materials = {"Si"};
+  std::vector<std::string> materials = {"C"};
   //Create new file to store histograms
   auto hFilename = "DepositedCharge.root";
   TFile* pFile = new TFile(hFilename, "recreate");
@@ -20,10 +20,10 @@ void chargeGenerated(){
   for(size_t i = 0; i < materials.size(); i++) {
     std::cout << "----------- " << materials[i].c_str() << " -----------" << std::endl;
     auto h1Title = Form("%s Charge Deposit", materials[i].c_str());
-    TH1D* h1 = new TH1D(materials[i].c_str(), h1Title, 100, 0.0, 6);
+    TH1D* h1 = new TH1D(materials[i].c_str(), h1Title, 100, 0.0, 8);
     h1->GetXaxis()->SetTitle("Charge [fC]");
     auto h2Title = Form("%s Energy Deposit", materials[i].c_str());
-    TH1D* h2 = new TH1D(materials[i].c_str(), h2Title, 100, 0.0, 0.2);
+    TH1D* h2 = new TH1D(materials[i].c_str(), h2Title, 100, 0.0, 0.5);
     h2->GetXaxis()->SetTitle("Energy [MeV]");
     //auto filename = Form("results/%s.root",materials[i].c_str());
     auto filename = Form("result/output_%s_0.root", materials[i].c_str());

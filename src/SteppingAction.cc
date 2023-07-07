@@ -44,16 +44,17 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
   
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
   if (step->GetTrack()->GetVolume()->GetName() == "Sensitive") {
+    evt->AddEdepTotal(eDep);
+    evt->AddEdepIonizing(ionizingEnergyDep);
+    evt->AddEdepNiel(nielEnergyDep);
     analysisManager->FillNtupleDColumn(1, 0, eDep/eV);
     analysisManager->FillNtupleDColumn(1, 1, xPos/um);
     analysisManager->FillNtupleDColumn(1, 2, yPos/um);
     analysisManager->FillNtupleDColumn(1, 3, zPos/um);
     analysisManager->AddNtupleRow(1);
-    evt->AddEdepTotal(eDep/materialDensity/targetThickness);
+    //evt->AddEdepTotal(eDep/materialDensity/targetThickness);
     if (step->GetTrack()->GetParentID() == 0) {
        evt->AddEdepTotalPrimary(eDep/materialDensity/targetThickness);
-       evt->AddEdepNiel(nielEnergyDep/materialDensity/targetThickness);
-       evt->AddEdepIonizing(ionizingEnergyDep/materialDensity/targetThickness);
     }
   }
 }
