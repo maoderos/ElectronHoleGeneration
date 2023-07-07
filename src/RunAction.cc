@@ -31,16 +31,13 @@ RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primar
   analysisManager->CreateNtupleDColumn("fEdepNiel");
   analysisManager->CreateNtupleDColumn("fPrimaryEnergy");
   analysisManager->CreateNtupleSColumn("fMaterial");
-  analysisManager->CreateNtupleDColumn("fCharge");
   analysisManager->FinishNtuple();
 
   analysisManager->CreateNtuple("Step", "Step");
-  analysisManager->CreateNtupleIColumn("fCharge");
+  analysisManager->CreateNtupleDColumn("fEdep");
   analysisManager->CreateNtupleDColumn("fXPos");
   analysisManager->CreateNtupleDColumn("fYPos");
   analysisManager->CreateNtupleDColumn("fZPos");
-  analysisManager->CreateNtupleSColumn("fMaterial");
-  analysisManager->CreateNtupleDColumn("fPrimaryEnergy");
   analysisManager->FinishNtuple();
 
 }

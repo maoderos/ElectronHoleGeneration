@@ -69,7 +69,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     physSensitive = new G4PVPlacement(0,G4ThreeVector(0,0,0.5*sensitiveThickness), logicSensitive, "Sensitive", logicWorld, false, 0, true);
 
     // Set step limiter for the sensitive volume
-    G4double maxStep = 100*nm;
+    G4double maxStep = sensitiveThickness/1000;
     G4UserLimits* sensitiveUserLimit = new G4UserLimits(maxStep);
     logicSensitive->SetUserLimits(sensitiveUserLimit);
     // Enable for validation purposes
@@ -95,7 +95,7 @@ void DetectorConstruction::ConstructSDandField()
 }
 
 void DetectorConstruction::SetSensitiveThickness(G4double value){
-  sensitiveThickness = value/2;
+  sensitiveThickness = value;
   G4cout << "Changing sensitive volume thickness" << G4endl;
   G4MTRunManager::GetRunManager()->ReinitializeGeometry();
 }
