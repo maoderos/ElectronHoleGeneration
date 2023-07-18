@@ -21,25 +21,29 @@
 
 int main(int argc,char** argv)
 {
+  
+  // Choose the Random engine
+  G4Random::setTheEngine(new CLHEP::RanecuEngine);
+  time_t systime = time(NULL);
+  long seed = (long) systime;
   // Detect interactive mode (if no arguments) and define UI session
+  //
   //
   G4UIExecutive* ui = 0;
   if ( argc == 1 ) {
     ui = new G4UIExecutive(argc, argv);
   }
 
-  // Optionally: choose a different Random engine...
-   G4Random::setTheEngine(new CLHEP::RanecuEngine);
-  
    G4String macro = "noMacro";
    G4int nThreads = 1;
   // Parsing argumetns 
    for (G4int i = 1; i < argc; i=i+2) {
      if (G4String(argv[i]) == "-m") {
        macro = argv[i+1];
-     }
-     else if (G4String(argv[i]) == "-t") {
-       nThreads = G4UIcommand::ConvertToInt(argv[i+1]);
+     } else if (G4String(argv[i]) == "-t") {
+         nThreads = G4UIcommand::ConvertToInt(argv[i+1]);
+     } else if (G4String(argv[i]) == "-s") {
+         seed = G4UIcommand::ConvertToInt(argv[i+1]);
      }
    }
   // Construct the default run manager
@@ -66,11 +70,6 @@ int main(int argc,char** argv)
   // User action initialization
   runManager->SetUserInitialization(new ActionInitialization(detector));
   
-  // Choose the Random engine
-  G4Random::setTheEngine(new CLHEP::RanecuEngine);
-  time_t systime = time(NULL);
-  long seed = (long) systime;
-  //long seed = 0;
   G4Random::setTheSeed(seed);
 
   // Initialize visualization
