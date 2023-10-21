@@ -18,7 +18,7 @@
 //G4ThreadLocal G4UniformElectricField* DetectorConstruction::fEMfield = 0;
 // Constructor
 DetectorConstruction::DetectorConstruction()
-: G4VUserDetectorConstruction(), logicWorld(0),physWorld(0), worldMaterial(0), sensitiveThickness(500*um), materialName("SiC")
+: G4VUserDetectorConstruction(), size_xyz(0.1*cm),logicWorld(0),physWorld(0), worldMaterial(0), sensitiveThickness(500*um), materialName("SiC")
 {
     detectorMessenger = new DetectorMessenger(this);
     DefineMaterials();
@@ -56,9 +56,8 @@ void DetectorConstruction::DefineMaterials(){
 G4VPhysicalVolume* DetectorConstruction::Construct(){
 
     //World Geometry
-    G4double size_xyz = 1*cm;
 
-    G4Box* solidWorld = new G4Box("BoxWorld", 0.5*size_xyz, 0.5*size_xyz, 0.5*size_xyz);
+    G4Box* solidWorld = new G4Box("BoxWorld", 1.5*size_xyz, 1.5*size_xyz, 1.5*size_xyz);
     logicWorld = new G4LogicalVolume(solidWorld, worldMaterial,"logicWorld");
     physWorld = new G4PVPlacement(0,G4ThreeVector(), logicWorld, "World",0,false,0);
 
@@ -66,7 +65,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
 
     solidSensitive = new G4Box("boxSensitive", 0.5*size_xyz, 0.5*size_xyz, 0.5*sensitiveThickness);
     logicSensitive = new G4LogicalVolume(solidSensitive, sensitiveMaterial, "logicSensitive");
-    physSensitive = new G4PVPlacement(0,G4ThreeVector(0,0,0.5*sensitiveThickness), logicSensitive, "Sensitive", logicWorld, false, 0, true);
+    physSensitive = new G4PVPlacement(0,G4ThreeVector(0,0.5*size_xyz,0.5*sensitiveThickness), logicSensitive, "Sensitive", logicWorld, false, 0, true);
 
     // Set step limiter for the sensitive volume
     G4double maxStep = sensitiveThickness/1000;
@@ -97,6 +96,12 @@ void DetectorConstruction::ConstructSDandField()
 void DetectorConstruction::SetSensitiveThickness(G4double value){
   sensitiveThickness = value;
   G4cout << "Changing sensitive volume thickness" << G4endl;
+  G4MTRunManager::GetRunManager()->ReinitializeGeometry();
+}
+
+void DetectorConstruction::setSensitiveXY(G4double value){
+  size_xyz = value;
+  G4cout << "Changing sensitive volume XY" << G4endl;
   G4MTRunManager::GetRunManager()->ReinitializeGeometry();
 }
 

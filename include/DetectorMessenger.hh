@@ -21,6 +21,7 @@ private:
 
   DetectorConstruction* detector;
   G4UIdirectory* changeTargetDir;
+  G4UIcmdWithADoubleAndUnit* changeSensitiveXY;
   G4UIcmdWithADoubleAndUnit* changeSensitiveThickness;
   G4UIcmdWithAString* changeSensitiveMaterial;
 

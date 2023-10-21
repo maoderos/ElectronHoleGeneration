@@ -22,7 +22,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
         virtual G4VPhysicalVolume* Construct();
         virtual void ConstructSDandField();
         void SetSensitiveThickness(G4double value);
+        void setSensitiveXY(G4double value);
         G4bool SetSensitiveMaterial(const G4String& value);
+        inline G4double GetSensitiveXY() const {return size_xyz;};
         inline G4double GetSensitiveThickness() const {return sensitiveThickness;};
         inline G4Material* GetSensitiveMaterial() const {return sensitiveMaterial;};
         inline G4double GetElectronHolePairEnergy() const {return electronHolePairEnergy;}
@@ -34,6 +36,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
         DetectorMessenger* detectorMessenger;
 
         // World
+        G4double size_xyz;
         G4LogicalVolume* logicWorld;
         G4VPhysicalVolume* physWorld;
         G4Material* worldMaterial;

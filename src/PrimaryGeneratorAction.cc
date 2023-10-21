@@ -9,12 +9,13 @@
 #include "G4ParticleTable.hh"
 #include "G4ParticleDefinition.hh"
 #include "G4SystemOfUnits.hh"
+#include "DetectorConstruction.hh"
 #include "Randomize.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-PrimaryGeneratorAction::PrimaryGeneratorAction()
-: G4VUserPrimaryGeneratorAction(),
+PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* det)
+: G4VUserPrimaryGeneratorAction(), detector(det),
   fParticleGun(0)
 {
   G4int n_particle = 1;
@@ -28,7 +29,7 @@ PrimaryGeneratorAction::PrimaryGeneratorAction()
   fParticleGun->SetParticleDefinition(particle);
 
 
-  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0,0,1.));
+  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0,0,-1.));
   fParticleGun->SetParticleEnergy(1.*GeV);
 }
 
@@ -45,8 +46,8 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   //this function is called at the begining of each event
   //
-
-  fParticleGun->SetParticlePosition(G4ThreeVector(0,0,-0.5*cm));
+  
+  fParticleGun->SetParticlePosition(G4ThreeVector(0,0.5*detector->GetSensitiveXY(),detector->GetSensitiveThickness()+0.1*mm));
   fParticleGun->GeneratePrimaryVertex(anEvent);
 
 }
