@@ -1,6 +1,6 @@
 /run/initialize
-/gun/particle proton
+/gun/particle alpha
 /setTarget/sensitiveThickness 500 um
 /setTarget/material C
-/gun/energy 2750 MeV
-/run/beamOn 10000
+/gun/energy 5.5 MeV
+/run/beamOn 1

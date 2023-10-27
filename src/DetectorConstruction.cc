@@ -18,7 +18,7 @@
 //G4ThreadLocal G4UniformElectricField* DetectorConstruction::fEMfield = 0;
 // Constructor
 DetectorConstruction::DetectorConstruction()
-: G4VUserDetectorConstruction(), size_xyz(0.1*cm),logicWorld(0),physWorld(0), worldMaterial(0), sensitiveThickness(500*um), materialName("SiC")
+: G4VUserDetectorConstruction(), size_xyz(0.1*cm),logicWorld(0),physWorld(0), worldMaterial(0), sensitiveThickness(500*um), materialName("C")
 {
     detectorMessenger = new DetectorMessenger(this);
     DefineMaterials();
@@ -49,8 +49,8 @@ void DetectorConstruction::DefineMaterials(){
     sicMaterial->AddMaterial(cMaterial, 50*perCent);
     electronHolePairEnergyMaterial["SiC"] = 8.4*eV; //doi: 10.3390/s18072289
 
-    sensitiveMaterial = sicMaterial;
-    electronHolePairEnergy = electronHolePairEnergyMaterial["SiC"];
+    sensitiveMaterial = cMaterial;
+    electronHolePairEnergy = electronHolePairEnergyMaterial["C"];
 }
 
 G4VPhysicalVolume* DetectorConstruction::Construct(){
