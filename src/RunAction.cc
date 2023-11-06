@@ -23,6 +23,12 @@ RunAction::RunAction(DetectorConstruction* _det, PrimaryGeneratorAction* _primar
   #ifdef G4MULTITHREADED
   analysisManager->SetNtupleMerging(true);
   #endif
+  G4int nbins = 100;
+  G4double sensitiveThickness = 100*um;
+  analysisManager->CreateH1("Energia depositada (eV)", "Energia depositada", nbins, ((sensitiveThickness - 20*um)/um),(sensitiveThickness/um));
+  analysisManager->SetH1Title(0,"Histograma de energia depositada");
+  analysisManager->SetH1XAxisTitle(0,"z (um)");
+  analysisManager->SetH1YAxisTitle(0, "dE/dx (eV/angstrom)");
   //Create directory for storing data
   analysisManager->CreateNtuple("Event", "Event");
   analysisManager->CreateNtupleDColumn("fdEdxPrimary");
@@ -67,6 +73,10 @@ void RunAction::BeginOfRunAction(const G4Run* aRun) {
 
 void RunAction::EndOfRunAction(const G4Run* aRun) {
  
+  G4int nbofEvents = aRun->GetNumberOfEvent();
+  G4double binWidth = analysisManager->GetH1Width(0);
+  G4double fac = 1/(nbofEvents*binWidth);
+  if(IsMaster()) analysisManager->ScaleH1(0,fac);
   analysisManager->Write();
   analysisManager->CloseFile();
   if (!IsMaster()) return; // if is not the master run, return 

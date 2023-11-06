@@ -1,6 +1,7 @@
 /run/initialize
 /gun/particle proton
 /setTarget/sensitiveThickness 500 um
+/setTarget/sensitiveXY 500 um
 /setTarget/material C
 /gun/energy 7 TeV
 /run/beamOn 1

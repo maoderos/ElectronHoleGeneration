@@ -50,6 +50,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
         G4Material* siMaterial;
         G4Material* sicMaterial;
         G4Material* cMaterial;
+        G4Material* diamondMaterial;
 
         std::map<G4String, G4double> electronHolePairEnergyMaterial;
         G4double electronHolePairEnergy;

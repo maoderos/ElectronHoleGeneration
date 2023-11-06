@@ -4,4 +4,4 @@
 /setTarget/sensitiveXY 500 um
 /setTarget/material C
 /gun/energy 5.8 MeV
-/run/beamOn 100000
+/run/beamOn 1

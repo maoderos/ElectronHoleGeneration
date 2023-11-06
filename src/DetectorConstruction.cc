@@ -18,7 +18,7 @@
 //G4ThreadLocal G4UniformElectricField* DetectorConstruction::fEMfield = 0;
 // Constructor
 DetectorConstruction::DetectorConstruction()
-: G4VUserDetectorConstruction(), size_xyz(0.1*cm),logicWorld(0),physWorld(0), worldMaterial(0), sensitiveThickness(500*um), materialName("C")
+: G4VUserDetectorConstruction(), size_xyz(500*um),logicWorld(0),physWorld(0), worldMaterial(0), sensitiveThickness(500*um), materialName("C")
 {
     detectorMessenger = new DetectorMessenger(this);
     DefineMaterials();
@@ -44,13 +44,22 @@ void DetectorConstruction::DefineMaterials(){
     electronHolePairEnergyMaterial["C"] = 13.0*eV;
     //SiC - Silicon Carbide 
 
+    // Diamond 
+    G4double density = 3.5*g/cm3;
+    G4double a = 12.01*g/mole;
+    G4double z = 6.;
+    G4int ncomp = 1;
+    electronHolePairEnergyMaterial["Diamond"] = 13.0*eV;
+    diamondMaterial = new G4Material("Diamond", z,a,density);
+    
+
     sicMaterial = new G4Material("G4_SiC", 3.16*g/cm3, 2);
     sicMaterial->AddMaterial(siMaterial, 50*perCent);
     sicMaterial->AddMaterial(cMaterial, 50*perCent);
     electronHolePairEnergyMaterial["SiC"] = 8.4*eV; //doi: 10.3390/s18072289
 
-    sensitiveMaterial = cMaterial;
-    electronHolePairEnergy = electronHolePairEnergyMaterial["C"];
+    sensitiveMaterial = diamondMaterial;
+    electronHolePairEnergy = electronHolePairEnergyMaterial["Diamond"];
 }
 
 G4VPhysicalVolume* DetectorConstruction::Construct(){
@@ -111,8 +120,9 @@ G4bool DetectorConstruction::SetSensitiveMaterial(const G4String& value) {
   } else if (value == "SiC") {
     sensitiveMaterial = sicMaterial;
   } else if (value == "C") {
-    sensitiveMaterial = cMaterial;
-  }
+    sensitiveMaterial = diamondMaterial;
+    //sensitiveMaterial = cMaterial;
+  } 
 
     electronHolePairEnergy = electronHolePairEnergyMaterial[value];
     materialName = value;

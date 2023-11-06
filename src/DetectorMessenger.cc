@@ -17,7 +17,7 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction* _detector)
   changeSensitiveThickness->SetGuidance("Set sensitive volume XYsize");
   changeSensitiveThickness->SetDefaultUnit("um");
   changeSensitiveThickness->SetParameterName("SensitiveXY", false);
-  changeSensitiveThickness->SetRange("SensitiveThickness>0");
+  changeSensitiveThickness->SetRange("SensitiveXY>0");
   changeSensitiveThickness->SetUnitCandidates("nm um mm cm");
   changeSensitiveThickness->AvailableForStates(G4State_PreInit, G4State_Idle);
 
@@ -45,6 +45,7 @@ DetectorMessenger::~DetectorMessenger()
   delete changeTargetDir;
   delete changeSensitiveThickness;
   delete changeSensitiveMaterial;
+  delete changeSensitiveXY;
 }
 
 void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)

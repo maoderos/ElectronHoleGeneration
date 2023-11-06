@@ -34,24 +34,29 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
   G4double yPos = step->GetPreStepPoint()->GetPosition().y();
   G4double zPos = step->GetPreStepPoint()->GetPosition().z();
   // Enable for validation purposes
-  /*
+  
   G4double stepLength = step->GetStepLength();
+  /*
   G4cout << "STEP LENGTH: " << stepLength/nm << " nm" << G4endl; 
-  */
+  
   evt->AddEdepTotal(eDep);
   evt->AddEdepIonizing(ionizingEnergyDep);
   evt->AddEdepNiel(nielEnergyDep);
+  */
   
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
   if (step->GetTrack()->GetVolume()->GetName() == "Sensitive") {
+  //if (step->GetTrack()->GetParentID() == 0) {
     evt->AddEdepTotal(eDep);
     evt->AddEdepIonizing(ionizingEnergyDep);
     evt->AddEdepNiel(nielEnergyDep);
+    analysisManager->FillH1(0,zPos/um,(eDep/eV)/(stepLength/angstrom));
     analysisManager->FillNtupleDColumn(1, 0, eDep/eV);
     analysisManager->FillNtupleDColumn(1, 1, xPos/um);
     analysisManager->FillNtupleDColumn(1, 2, yPos/um);
     analysisManager->FillNtupleDColumn(1, 3, zPos/um);
     analysisManager->AddNtupleRow(1);
+    //}
     //evt->AddEdepTotal(eDep/materialDensity/targetThickness);
     if (step->GetTrack()->GetParentID() == 0) {
        evt->AddEdepTotalPrimary(eDep/materialDensity/targetThickness);

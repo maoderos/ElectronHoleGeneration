@@ -19,12 +19,13 @@ void chargeGenerated(){
   // Loop in materials
   for(size_t i = 0; i < materials.size(); i++) {
     std::cout << "----------- " << materials[i].c_str() << " -----------" << std::endl;
-    auto h1Title = Form("%s Charge Deposit", materials[i].c_str());
+    //auto h1Title = Form("%s - Carga depositada", materials[i].c_str());
+    auto h1Title = Form("Diamante - Carga depositada");
     TH1D* h1 = new TH1D(materials[i].c_str(), h1Title, 100, 0.0, 8);
-    h1->GetXaxis()->SetTitle("Charge [fC]");
-    auto h2Title = Form("%s Energy Deposit", materials[i].c_str());
+    h1->GetXaxis()->SetTitle("Carga [fC]");
+    auto h2Title = Form("%s Energia depositada", materials[i].c_str());
     TH1D* h2 = new TH1D(materials[i].c_str(), h2Title, 100, 0.0, 0.5);
-    h2->GetXaxis()->SetTitle("Energy [MeV]");
+    h2->GetXaxis()->SetTitle("Energia [MeV]");
     //auto filename = Form("results/%s.root",materials[i].c_str());
     auto filename = Form("result/output_%s_0.root", materials[i].c_str());
     TFile* data = new TFile(filename, "READ");
@@ -51,20 +52,21 @@ void chargeGenerated(){
     auto legend = new TLegend(0.7, 0.7, 0.9, 0.9);
     gStyle->SetOptStat(0);
     TCanvas* c1 = new TCanvas();
-    c1->Divide(1,2);
+    //c1->Divide(1,2);
     c1->cd(1);
     auto legend1 = new TLegend(0.7, 0.7, 0.9, 0.9);
     h1->Draw();
-    legend1->AddEntry(h1, "Simulation");
-    legend1->AddEntry(f1, "Landau distribution");
+    legend1->AddEntry(h1, "Simulac#tilde{a}o");
+    legend1->AddEntry(f1, "Distribuic#tilde{a}o de Landau");
     legend1->Draw();
+    /*
     c1->cd(2);
     auto legend2 = new TLegend(0.7, 0.7, 0.9, 0.9);
     h2->Draw();
-    legend2->AddEntry(h2, "Simulation");
-    legend2->AddEntry(f2, "Landau distribution");
+    legend2->AddEntry(h2, "Simulação");
+    legend2->AddEntry(f2, "Distribuição de Landau");
     legend2->Draw();
-
+    */
     
     auto outputFile = Form("%s.pdf", materials[i].c_str());
     c1->SaveAs(outputFile);
